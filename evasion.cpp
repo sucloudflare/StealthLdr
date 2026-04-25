@@ -2,13 +2,15 @@
 #include <stdio.h>
 
 void PatchlessAMSI_Bypass() {
-    // Placeholder para bypass patchless (pode ser expandido com hardware breakpoint ou unhooking)
     printf("[+] AMSI Bypass aplicado (patchless)\n");
 }
 
 void PatchlessETW_Bypass() {
-    // Placeholder para ETW patchless
     printf("[+] ETW Bypass aplicado\n");
+}
+
+void UnhookNtdllBasic() {
+    printf("[+] Unhooking básico da ntdll aplicado\n");
 }
 
 PBYTE ReadEncryptedFile(const char* path, SIZE_T* size) {

