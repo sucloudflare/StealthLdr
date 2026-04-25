@@ -1,17 +1,10 @@
+#include "evasion.h"
 #include <windows.h>
 #include <stdio.h>
 
-void PatchlessAMSI_Bypass() {
-    printf("[+] AMSI Bypass aplicado (patchless)\n");
-}
-
-void PatchlessETW_Bypass() {
-    printf("[+] ETW Bypass aplicado\n");
-}
-
-void UnhookNtdllBasic() {
-    printf("[+] Unhooking básico da ntdll aplicado\n");
-}
+void PatchlessAMSI_Bypass() { printf("[+] AMSI Bypass aplicado\n"); }
+void PatchlessETW_Bypass()  { printf("[+] ETW Bypass aplicado\n"); }
+void UnhookNtdllBasic()     { printf("[+] Unhooking ntdll básico aplicado\n"); }
 
 PBYTE ReadEncryptedFile(const char* path, SIZE_T* size) {
     FILE* f = fopen(path, "rb");

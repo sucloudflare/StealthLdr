@@ -1,4 +1,4 @@
-#include <windows.h>
+#include "spoofing.h"
 #include <stdio.h>
 
 void SpoofCallStack() {

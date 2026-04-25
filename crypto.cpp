@@ -1,6 +1,5 @@
+#include "crypto.h"
 #include "aes.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 PBYTE AES_Decrypt(PBYTE encrypted, SIZE_T encSize, SIZE_T* outSize) {
@@ -11,13 +10,12 @@ PBYTE AES_Decrypt(PBYTE encrypted, SIZE_T encSize, SIZE_T* outSize) {
     memcpy(iv, encrypted, 16);
 
     *outSize = encSize - 16;
-    PBYTE plaintext = (PBYTE)malloc(*outSize + 16); // buffer maior para segurança
+    PBYTE plaintext = (PBYTE)malloc(*outSize);
 
     struct AES_ctx ctx;
     AES_init_ctx_iv(&ctx, key, iv);
     AES_CBC_decrypt_buffer(&ctx, encrypted + 16, *outSize);
 
-    // Remove PKCS7 padding
     unsigned char padding = plaintext[*outSize - 1];
     *outSize -= padding;
 

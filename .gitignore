@@ -1,0 +1,8 @@
+*.exe
+*.enc
+shellcode*
+*.o
+SysWhispers4/
+encrypt.py
+a.jpg
+*.bin
