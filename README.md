@@ -1,4 +1,6 @@
 <h1>StealthLdr - Advanced Shellcode Loader 2026</h1>
+
+<img src='a.png' alt='img'>
         
 <p><strong>Loader stealth em C++</strong> com <strong>Indirect Syscalls</strong>, AES-256 encryption, Patchless AMSI/ETW Bypass, Stack Spoofing e mais.</p>
         
