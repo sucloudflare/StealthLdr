@@ -24,7 +24,7 @@
 </ul>
 
 <h2>Como usar (muito simples)</h2>
-<pre><code>git clone https://github.com/seuusuario/StealthLdr.git
+<pre><code>git clone https://github.com/sucloudflare/StealthLdr.git
 cd StealthLdr
 
 chmod +x build.sh
